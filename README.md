@@ -6,7 +6,7 @@
 
 ## DYFSwiftRuntimeProvider
 
-`DYFSwiftRuntimeProvider`封装了 Runtime，并可快速使用字典模型互转、归档解档、添加一个方法、交换两个方法、替换一个方法、获取某类所有的变量与属性名和方法名。
+`DYFRuntimeProvider`包装了 Runtime，可以快速用于字典和模型的转换、存档和取消归档、添加方法、交换两个方法、替换方法以及获取类的所有变量名、属性名和方法名。
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 [![CocoaPods Version](http://img.shields.io/cocoapods/v/DYFSwiftRuntimeProvider.svg?style=flat)](http://cocoapods.org/pods/DYFSwiftRuntimeProvider)&nbsp;
@@ -79,7 +79,9 @@ for name in propertyNames {
 ```
 override func loadView() {
     super.loadView()
+    
     let ret = DYFSwiftRuntimeProvider.addMethod(withClass: XXViewController.self, selector: NSSelectorFromString("verifyCode"), impClass: XXViewController.self, impSelector: #selector(XXViewController.verifyQRCode))
+    
     print("The result of adding method is \(ret)")
 }
 
@@ -98,7 +100,9 @@ override func viewDidLoad() {
 ```
 override func viewDidLoad() {
     super.viewDidLoad()
+    
     DYFSwiftRuntimeProvider.exchangeMethod(withClass: XXViewController.self, selector: #selector(XXViewController.verifyCode1), targetClass: XXViewController.self, targetSelector: #selector(XXViewController.verifyQRCode))
+    
     verifyCode1()
     verifyQRCode()
 }
@@ -117,7 +121,9 @@ override func viewDidLoad() {
 ```
 override func viewDidLoad() {
     super.viewDidLoad()
+    
     DYFSwiftRuntimeProvider.replaceMethod(withClass: XXViewController.self, selector: #selector(XXViewController.verifyCode2), targetClass: XXViewController.self, targetSelector: #selector(XXViewController.verifyQRCode))
+    
     verifyCode2()
     verifyQRCode()
 }
@@ -136,7 +142,7 @@ override func viewDidLoad() {
 **1. 字典转模型**
 
 ```
-// e.g.: DYFStoreTransaction: NSObject, NSCoding
+// e.g.: DYFStoreTransaction: NSObject
 let transaction = DYFSwiftRuntimeProvider.model(withDictionary: itemDict, forClass: DYFStoreTransaction.self)
 ```
 
@@ -153,8 +159,12 @@ let dict = DYFSwiftRuntimeProvider.dictionary(withModel: transaction)
 
 ```
 // e.g.: DYFStoreTransaction: NSObject, NSCoding
-public func encode(with aCoder: NSCoder) {
-    DYFSwiftRuntimeProvider.encode(aCoder, forObject: self)
+open class DYFStoreTransaction: NSObject, NSCoding {
+
+    public func encode(with aCoder: NSCoder) {
+        DYFSwiftRuntimeProvider.encode(aCoder, forObject: self)
+    }
+    
 }
 ```
 
@@ -162,18 +172,23 @@ public func encode(with aCoder: NSCoder) {
 
 ```
 // e.g.: DYFStoreTransaction: NSObject, NSCoding 
-public required convenience init?(coder aDecoder: NSCoder) {
-    self.init()
-    DYFSwiftRuntimeProvider.decode(aDecoder, forObject: self)
+open class DYFStoreTransaction: NSObject, NSCoding {
+
+    public required convenience init?(coder aDecoder: NSCoder) {
+        self.init()
+        DYFSwiftRuntimeProvider.decode(aDecoder, forObject: self)
+    }
+    
 }
 ```
 
 
 ## 演示
 
-`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/dgynfi/DYFStore/blob/master/DYFStore/DYFStoreKeychainPersistence.swift) 下学习如何使用。
+`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/dgynfi/DYFStore) 下学习如何使用。
 
 
 ## 欢迎反馈
 
 如果你注意到任何问题，被卡住或只是想聊天，请随意制造一个问题。我乐意帮助你。
+
