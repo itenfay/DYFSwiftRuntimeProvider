@@ -336,7 +336,7 @@ public class DYFSwiftRuntimeProvider: NSObject {
             if let value = m.value(forKey: key) {
                 dict[key] = value
             } else {
-                dict[key] = "null"
+                dict[key] = NSNull()
             }
         }
         
