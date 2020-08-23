@@ -1,44 +1,38 @@
-## [Chinese Document](https://github.com/dgynfi/DYFSwiftRuntimeProvider)
-
-
-If this project can help you, please give it [a star](https://github.com/dgynfi/DYFSwiftRuntimeProvider/blob/master/README-en.md). Thanks!
-
-
 ## DYFSwiftRuntimeProvider
 
-`DYFSwiftRuntimeProvider` wraps the runtime, and can quickly use for the transformation of the dictionary and model, archiving and unarchiving, adding a method, exchanging two methods, replacing a method, and getting all the variable names, property names and method names of a class.
+`DYFRuntimeProvider`包装了 Runtime，可以快速用于字典和模型的转换、存档和取消归档、添加方法、交换两个方法、替换方法以及获取类的所有变量名、属性名和方法名。
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 [![CocoaPods Version](http://img.shields.io/cocoapods/v/DYFSwiftRuntimeProvider.svg?style=flat)](http://cocoapods.org/pods/DYFSwiftRuntimeProvider)&nbsp;
 ![CocoaPods Platform](http://img.shields.io/cocoapods/p/DYFSwiftRuntimeProvider.svg?style=flat)&nbsp;
 
 
-## Group (ID:614799921)
+## QQ群 (ID:614799921)
 
 <div align=left>
 &emsp; <img src="https://github.com/dgynfi/DYFSwiftRuntimeProvider/raw/master/images/g614799921.jpg" width="30%" />
 </div>
 
 
-## Installation
+## 安装
 
-Using [CocoaPods](https://cocoapods.org):
+使用 [CocoaPods](https://cocoapods.org):
 
-```
+``` 
 use_frameworks!
 target 'Your target name'
 
-pod 'DYFSwiftRuntimeProvider', '~> 1.0.1'
+pod 'DYFSwiftRuntimeProvider', '~> 1.0.2'
 ```
 
 
-## Usage
+## 使用
 
-Add `import DYFSwiftRuntimeProvider` to your source code.
+将 `import DYFSwiftRuntimeProvider` 添加到源代码中。
 
-### Gets all the method names of a class
+### 获取某类的所有方法名
 
-**1. Gets all method names of an instance**
+**1. 获取实例的所有方法名**
 
 ```
 let methodNames = DYFSwiftRuntimeProvider.methodList(withClass: UITableView.self)
@@ -47,7 +41,7 @@ for name in methodNames {
 }
 ```
 
-**2. Gets all method names of a class**
+**2. 获取类的所有方法名**
 
 ```
 let clsMethodNames = DYFSwiftRuntimeProvider.classMethodList(self)
@@ -56,7 +50,7 @@ for name in clsMethodNames {
 }
 ```
 
-### Gets all variable names of a class
+### 获取某类所有的变量名
 
 ```
 let ivarNames = DYFSwiftRuntimeProvider.ivarList(withClass: UILabel.self)
@@ -65,7 +59,7 @@ for name in ivarNames {
 }
 ```
 
-### Gets all the property names of a class
+### 获取某类所有的属性名
 
 ```
 let propertyNames = DYFSwiftRuntimeProvider.propertyList(withClass: UILabel.self)
@@ -74,7 +68,7 @@ for name in propertyNames {
 }
 ```
 
-### Adds a method
+### 添加一个方法
 
 ```
 override func loadView() {
@@ -95,7 +89,7 @@ override func viewDidLoad() {
 }
 ```
 
-### Exchanges two methods
+### 交换两个方法
 
 ```
 override func viewDidLoad() {
@@ -116,7 +110,7 @@ override func viewDidLoad() {
 }
 ```
 
-### Replaces a method
+### 替换一个方法
 
 ```
 override func viewDidLoad() {
@@ -137,25 +131,25 @@ override func viewDidLoad() {
 }
 ```
 
-### The transformation of dictionary and model
+### 字典和模型互转
 
-**1. Converts the dictionary to model**
+**1. 字典转模型**
 
 ```
 // e.g.: DYFStoreTransaction: NSObject
 let transaction = DYFSwiftRuntimeProvider.model(withDictionary: itemDict, forClass: DYFStoreTransaction.self)
 ```
 
-**2. Converts the model to dictionary**
+**2. 模型转字典**
 
 ```
 let transaction = DYFStoreTransaction()
 let dict = DYFSwiftRuntimeProvider.dictionary(withModel: transaction)
 ```
-    
-### Archives and unarchives
 
-**1. Archives**
+### 归档解档
+
+**1. 归档**
 
 ```
 // e.g.: DYFStoreTransaction: NSObject, NSCoding
@@ -168,7 +162,7 @@ open class DYFStoreTransaction: NSObject, NSCoding {
 }
 ```
 
-**2. Unarchives**
+**2. 解档**
 
 ```
 // e.g.: DYFStoreTransaction: NSObject, NSCoding 
@@ -183,12 +177,11 @@ open class DYFStoreTransaction: NSObject, NSCoding {
 ```
 
 
-## Demo
+## 演示
 
-`DYFSwiftRuntimeProvider` is learned how to use under this [Demo](https://github.com/dgynfi/DYFStore)
+`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/dgynfi/DYFStore) 下学习如何使用。
 
 
-## Feedback is welcome
+## 欢迎反馈
 
-If you notice any issue, got stuck or just want to chat feel free to create an issue. I will be happy to help you.
-
+如果你注意到任何问题，被卡住或只是想聊天，请随意制造一个问题。我乐意帮助你。
