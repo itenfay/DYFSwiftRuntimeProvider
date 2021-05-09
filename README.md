@@ -24,7 +24,7 @@ Using [CocoaPods](https://cocoapods.org):
 use_frameworks!
 target 'Your target name'
 
-pod 'DYFSwiftRuntimeProvider', '~> 1.0.2'
+pod 'DYFSwiftRuntimeProvider', '~> 1.0.3'
 ```
 
 
