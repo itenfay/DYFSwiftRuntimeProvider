@@ -1,6 +1,6 @@
 ## DYFSwiftRuntimeProvider
 
-`DYFRuntimeProvider`包装了 Runtime，可以快速用于字典和模型的转换、存档和取消归档、添加方法、交换两个方法、替换方法以及获取类的所有变量名、属性名和方法名。
+`DYFRuntimeProvider`包装了Objective-C的运行时，并提供了一些常见的用法。
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 [![CocoaPods Version](http://img.shields.io/cocoapods/v/DYFSwiftRuntimeProvider.svg?style=flat)](http://cocoapods.org/pods/DYFSwiftRuntimeProvider)&nbsp;
@@ -10,7 +10,7 @@
 ## QQ群 (ID:614799921)
 
 <div align=left>
-&emsp; <img src="https://github.com/dgynfi/DYFSwiftRuntimeProvider/raw/master/images/g614799921.jpg" width="30%" />
+&emsp; <img src="https://github.com/chenxing640/DYFSwiftRuntimeProvider/raw/master/images/g614799921.jpg" width="30%" />
 </div>
 
 
@@ -22,7 +22,9 @@
 use_frameworks!
 target 'Your target name'
 
-pod 'DYFSwiftRuntimeProvider', '~> 1.0.3'
+pod 'DYFSwiftRuntimeProvider'
+Or
+pod 'DYFSwiftRuntimeProvider', '~> 2.0.0'
 ```
 
 
@@ -30,83 +32,91 @@ pod 'DYFSwiftRuntimeProvider', '~> 1.0.3'
 
 将 `import DYFSwiftRuntimeProvider` 添加到源代码中。
 
-### 获取某类的所有方法名
+### 获取一个类的所有方法名
 
-**1. 获取实例的所有方法名**
-
-```
-let methodNames = DYFSwiftRuntimeProvider.methodList(withClass: UITableView.self)
-for name in methodNames {
-    print("The method name: \(name)")
-}
-```
-
-**2. 获取类的所有方法名**
+**1. 获取一个类的实例的所有方法名**
 
 ```
-let clsMethodNames = DYFSwiftRuntimeProvider.classMethodList(self)
-for name in clsMethodNames {
-    print("The class method name: \(name)")
-}
+let instMethods = DYFSwiftRuntimeProvider.supplyMethodList(withClass: UITableView.self)
+print("========methods: \(instMethods)")
 ```
 
-### 获取某类所有的变量名
+**2. 获取一个类的所有类方法名**
 
 ```
-let ivarNames = DYFSwiftRuntimeProvider.ivarList(withClass: UILabel.self)
-for name in ivarNames {
-    print("The var name: \(name)")
-}
+let clsMethods = DYFSwiftRuntimeProvider.supplyClassMethodList(withClass: UIView.self)
+print("========clsMethods: \(clsMethods)")
 ```
 
-### 获取某类所有的属性名
+### 获取一个类的所有变量名
 
 ```
-let propertyNames = DYFSwiftRuntimeProvider.propertyList(withClass: UILabel.self)
-for name in propertyNames {
-    print("The property name: \(name)")
+let ivars = DYFSwiftRuntimeProvider.supplyIvarList(withClass: UIButton.self)
+print("========ivars: \(ivars)")
+```
+
+### 获取一个类的所有属性名
+
+```
+let properties = DYFSwiftRuntimeProvider.supplyPropertyList(withClass: UIButton.self)
+print("========properties: \(properties)")
+```
+
+以这个类为例，如下：
+```
+class People: NSObject {
+    var name: String
+    
+    override init() {
+        self.name = ""
+        super.init()
+    }
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    @objc dynamic func logName(age: Int) {
+        print("========" + name + " is \(age) years old.")
+    }
+    
+    @objc dynamic class func decInfo(age: Int, name: String) {
+        print("========\(type(of: self)) " + "age = \(age)" + ", name: " + name)
+    }
+    
+    @objc func eat(foods: [String : Any]) {
+        print("========eat foods: \(foods)")
+    }
+    
+    @objc func run(step: Int) {
+        print("========1: \(name) runs \(step) step.")
+    }
+    
+    @objc func run2(step: Int) {
+        print("========2: \(name) runs \(step) step.")
+    }
 }
 ```
 
 ### 添加一个方法
 
 ```
-override func loadView() {
-    super.loadView()
-    
-    let ret = DYFSwiftRuntimeProvider.addMethod(withClass: XXViewController.self, selector: NSSelectorFromString("verifyCode"), impClass: XXViewController.self, impSelector: #selector(XXViewController.verifyQRCode))
-    
-    print("The result of adding method is \(ret)")
-}
-
-@objc func verifyQRCode() {
-    print("Verifies QRCode")
-}
-
 override func viewDidLoad() {
     super.viewDidLoad()
-    self.perform(NSSelectorFromString("verifyCode"))
+    _ = DYFSwiftRuntimeProvider.addMethod(withClass: ViewController.self, selector: Selector("eat(foods:)"), impClass: People.self, impSelector: #selector(People.eat(foods:)))
+    perform(Selector("eat(foods:)"), with: ["name": "meat", "number": 1])
 }
 ```
 
 ### 交换两个方法
 
-```
+````
 override func viewDidLoad() {
     super.viewDidLoad()
-    
-    DYFSwiftRuntimeProvider.exchangeMethod(withClass: XXViewController.self, selector: #selector(XXViewController.verifyCode1), targetClass: XXViewController.self, targetSelector: #selector(XXViewController.verifyQRCode))
-    
-    verifyCode1()
-    verifyQRCode()
-}
-
-@objc func verifyCode1() {
-    print("Verifies Code1")
-}
-
-@objc func verifyQRCode() {
-    print("Verifies QRCode")
+    DYFSwiftRuntimeProvider.exchangeMethod(withClass: People.self, selector: #selector(People.run(step:)), anotherSelector: #selector(People.run2(step:)))
+    let p = People(name: "Albert")
+    p.run(step: 20)
+    p.run2(step: 50)
 }
 ```
 
@@ -115,36 +125,84 @@ override func viewDidLoad() {
 ```
 override func viewDidLoad() {
     super.viewDidLoad()
-    
-    DYFSwiftRuntimeProvider.replaceMethod(withClass: XXViewController.self, selector: #selector(XXViewController.verifyCode2), targetClass: XXViewController.self, targetSelector: #selector(XXViewController.verifyQRCode))
-    
-    verifyCode2()
-    verifyQRCode()
-}
-
-@objc func verifyCode2() {
-    print("Verifies Code2")
-}
-
-@objc func verifyQRCode() {
-    print("Verifies QRCode")
+    DYFSwiftRuntimeProvider.replaceMethod(withClass: People.self, selector: #selector(People.run(step:)), targetSelector: #selector(People.run2(step:)))
+    let p = People(name: "Albert")
+    p.run2(step: 50)
 }
 ```
 
-### 字典和模型互转
+### 交换两个方法（黑魔法）
+
+```
+override func viewDidLoad() {
+    super.viewDidLoad()
+    DYFSwiftRuntimeProvider.swizzleMethod(withClass: People.self, selector: #selector(People.run(step:)), swizzledSelector: #selector(People.run2(step:)))
+    let p = People(name: "Albert")
+    p.run(step: 20)
+    p.run2(step: 50)
+}
+```
+
+### 动态替换实例和类方法
+
+```
+typealias IMPCType = @convention(c) (Any, Selector, Int) -> Void
+
+private let newFunc: @convention(block) (Any, Int) -> Void = { (obj, j) in
+    print("====>obj: \(obj), j: \(j)")
+    // Invoke the original method.
+    let selector = #selector(People.logName(age:))
+    ViewController.impBlock?(obj, selector, j)
+}
+
+typealias PEDecInfoIMPCType = @convention(c) (Any, Selector, Int, String) -> Void
+
+private let peDecInfoFunc: @convention(block) (Any, Int, String) -> Void = { (obj, age, name) in
+    print("====>obj: \(obj), age: \(age), name: \(name)")
+}
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+    Self.impBlock = People.dy_replaceInstanceMethod(selector: #selector(People.logName(age:)), type: IMPCType.self, block: newFunc)
+    _ = People.dy_replaceClassMethod(selector: #selector(People.decInfo(age:name:)), type: PEDecInfoIMPCType.self, block: peDecInfoFunc)
+}
+```
+
+### 字典和模型的转换
+
+以这个类为例，如下：
+
+```
+class Teacher: NSObject {
+    @objc var name: String?
+    @objc var age: Int = 0
+    @objc var address: String?
+}
+```
 
 **1. 字典转模型**
 
 ```
-// e.g.: DYFStoreTransaction: NSObject
-let transaction = DYFSwiftRuntimeProvider.model(withDictionary: itemDict, forClass: DYFStoreTransaction.self)
+let teacher = DYFSwiftRuntimeProvider.asObject(with: ["name": "高粟", "age": 26, "address": "xx市xx"], for: Teacher.self)
+if let teacher = teacher {
+    print("========teacher: \(teacher), \(teacher.name), \(teacher.age), \(teacher.address)")
+}
+```
+
+```
+_ = DYFSwiftRuntimeProvider.asObject(withDictionary: ["name": "高粟", "age": 26, "address": "xx市xx"], forClass: Teacher.self)
+_ = DYFSwiftRuntimeProvider.asObject(withDictionary: ["name": "高粟", "age": 26, "address": "xx市xx"], forObject: Teacher())
 ```
 
 **2. 模型转字典**
 
 ```
-let transaction = DYFStoreTransaction()
-let dict = DYFSwiftRuntimeProvider.dictionary(withModel: transaction)
+let teacher = Teacher()
+teacher.name = "李想"
+teacher.age = 22
+teacher.address = "xxx"
+let dict = DYFSwiftRuntimeProvider.asDictionary(withObject: teacher)
+print("========dict: \(dict)")
 ```
 
 ### 归档解档
@@ -152,36 +210,74 @@ let dict = DYFSwiftRuntimeProvider.dictionary(withModel: transaction)
 **1. 归档**
 
 ```
-// e.g.: DYFStoreTransaction: NSObject, NSCoding
-open class DYFStoreTransaction: NSObject, NSCoding {
-
+open class Transaction: NSObject, NSCoding {
     public func encode(with aCoder: NSCoder) {
         DYFSwiftRuntimeProvider.encode(aCoder, forObject: self)
     }
-    
 }
 ```
 
 **2. 解档**
 
 ```
-// e.g.: DYFStoreTransaction: NSObject, NSCoding 
-open class DYFStoreTransaction: NSObject, NSCoding {
-
+open class Transaction: NSObject, NSCoding {
     public required convenience init?(coder aDecoder: NSCoder) {
         self.init()
         DYFSwiftRuntimeProvider.decode(aDecoder, forObject: self)
+    }
+}
+```
+
+### 添加一个分类属性
+
+```
+extension UIApplication {
+    
+    struct AssociatedObjcKeys {
+        static var teacherKey = "TeacherKey"
+    }
+    
+    var teacher: Teacher? {
+        get {
+            DYFSwiftRuntimeProvider.getAssociatedObject(self, key: &AssociatedObjcKeys.teacherKey) as? Teacher
+        }
+        set (objc) {
+            DYFSwiftRuntimeProvider.setAssociatedObject(self, key: &AssociatedObjcKeys.teacherKey, value: objc, policy: .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
     }
     
 }
 ```
 
+### 获取和修改实例变量属性
 
-## 演示
+```
+// for ViewController.
+if let view = DYFSwiftRuntimeProvider.getInstanceVar(withName: "_view", forObject: self) as? UIView {
+    view.backgroundColor = UIColor.brown
+}
 
-`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/dgynfi/DYFStore) 下学习如何使用。
+// Declares the var in ViewController.
+var fillColor: UIColor = .white
+
+if let fillColor = DYFSwiftRuntimeProvider.getInstanceVar(withName: "fillColor", forObject: self) as? UIColor {
+    print("fillColor: \(fillColor)")
+    if fillColor == .white {
+        print("fillColor is white color.")
+    }
+}
+
+DYFSwiftRuntimeProvider.setInstanceVar(withName: "fillColor", value: UIColor.brown, forObject: self)
+print("self.fillColor: \(fillColor)")
+```
+
+
+<!-- ## 演示
+
+`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/chenxing640/DYFStore) 下学习如何使用。
+-->
 
 
 ## 欢迎反馈
 
-如果你注意到任何问题，被卡住或只是想聊天，请随意制造一个问题。我乐意帮助你。
+如果你注意到任何问题被卡住，请制造一个问题。我乐意帮助你。
