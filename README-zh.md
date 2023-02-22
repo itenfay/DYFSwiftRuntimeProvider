@@ -23,8 +23,8 @@ use_frameworks!
 target 'Your target name'
 
 pod 'DYFSwiftRuntimeProvider'
-Or
-pod 'DYFSwiftRuntimeProvider', '~> 2.0.0'
+or
+pod 'DYFSwiftRuntimeProvider', '~> 2.0.1'
 ```
 
 
@@ -67,12 +67,12 @@ print("========properties: \(properties)")
 class People: NSObject {
     var name: String
     
-    override init() {
+    public override init() {
         self.name = ""
         super.init()
     }
     
-    init(name: String) {
+    public init(name: String) {
         self.name = name
     }
     
@@ -81,18 +81,26 @@ class People: NSObject {
     }
     
     @objc dynamic class func decInfo(age: Int, name: String) {
-        print("========\(type(of: self)) " + "age = \(age)" + ", name: " + name)
+        print("========decInfo: " + "name: " + name + ", age = \(age)")
+    }
+    
+    @objc dynamic class func decInfo2(age: Int, name: String) {
+        print("========decInfo2: " + "name: " + name + ", age = \(age)")
+    }
+    
+    @objc dynamic class func decInfo3(age: Int, name: String) {
+        print("========decInfo3: " + "name: " + name + ", age = \(age)")
     }
     
     @objc func eat(foods: [String : Any]) {
         print("========eat foods: \(foods)")
     }
     
-    @objc func run(step: Int) {
+    @objc dynamic func run(step: Int) {
         print("========1: \(name) runs \(step) step.")
     }
     
-    @objc func run2(step: Int) {
+    @objc dynamic func run2(step: Int) {
         print("========2: \(name) runs \(step) step.")
     }
 }
@@ -104,7 +112,7 @@ class People: NSObject {
 override func viewDidLoad() {
     super.viewDidLoad()
     _ = DYFSwiftRuntimeProvider.addMethod(withClass: ViewController.self, selector: Selector("eat(foods:)"), impClass: People.self, impSelector: #selector(People.eat(foods:)))
-    perform(Selector("eat(foods:)"), with: ["name": "meat", "number": 1])
+    perform(NSSelectorFromString("eat(foods:)"), with: ["name": "meat", "number": 1])
 }
 ```
 
@@ -117,6 +125,10 @@ override func viewDidLoad() {
     let p = People(name: "Albert")
     p.run(step: 20)
     p.run2(step: 50)
+    
+    DYFSwiftRuntimeProvider.exchangeClassMethod(withClass: People.self, selector: #selector(People.decInfo2(age:name:)), anotherSelector: #selector(People.decInfo3(age:name:)))
+    People.decInfo2(age: 50, name: "David")
+    People.decInfo3(age: 26, name: "Liming")
 }
 ```
 
@@ -140,6 +152,10 @@ override func viewDidLoad() {
     let p = People(name: "Albert")
     p.run(step: 20)
     p.run2(step: 50)
+    
+    DYFSwiftRuntimeProvider.swizzleClassMethod(withClass: People.self, selector: #selector(People.decInfo2(age:name:)), swizzledSelector: #selector(People.decInfo3(age:name:)))
+    People.decInfo2(age: 50, name: "David")
+    People.decInfo3(age: 26, name: "Liming")
 }
 ```
 
@@ -148,11 +164,11 @@ override func viewDidLoad() {
 ```
 typealias IMPCType = @convention(c) (Any, Selector, Int) -> Void
 
-private let newFunc: @convention(block) (Any, Int) -> Void = { (obj, j) in
-    print("====>obj: \(obj), j: \(j)")
+private let newFunc: @convention(block) (Any, Int) -> Void = { (obj, age) in
+    print("========obj: \(obj), age: \(age)")
     // Invoke the original method.
     let selector = #selector(People.logName(age:))
-    ViewController.impBlock?(obj, selector, j)
+    ViewController.impBlock?(obj, selector, age)
 }
 
 typealias PEDecInfoIMPCType = @convention(c) (Any, Selector, Int, String) -> Void

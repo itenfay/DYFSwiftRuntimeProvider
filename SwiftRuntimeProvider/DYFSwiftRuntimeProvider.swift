@@ -234,10 +234,45 @@ final public class DYFSwiftRuntimeProvider: NSObject {
         else {
             return false
         }
-        //let imp1: IMP = method_getImplementation(m1)
-        //let imp2: IMP = method_getImplementation(m2)
+        //let imp1 = method_getImplementation(m1)
+        //let imp2 = method_getImplementation(m2)
         //method_setImplementation(m1, imp2)
         //method_setImplementation(m2, imp1)
+        method_exchangeImplementations(m1, m2)
+        return true
+    }
+    
+    /// Exchanges the implementations of two class methods for a given class.
+    /// - Parameters:
+    ///   - cls: The class you want to modify.
+    ///   - sel: A selector that identifies the class  method whose implementation you want to exchange.
+    ///   - aSel: The selector of the class method you want to specify.
+    /// - Returns: true if the class method was exchanged successfully, otherwise false.
+    @discardableResult
+    @objc public class func exchangeClassMethod(withClass cls: AnyClass?, selector sel: Selector, anotherSelector aSel: Selector) -> Bool {
+        guard let m1 = class_getClassMethod(cls, sel),
+              let m2 = class_getClassMethod(cls, aSel)
+        else {
+            return false
+        }
+        method_exchangeImplementations(m1, m2)
+        return true
+    }
+    
+    /// Exchanges the implementations of two class methods for two given classes.
+    /// - Parameters:
+    ///   - cls: The class you want to modify.
+    ///   - sel: A selector that identifies the class method whose implementation you want to exchange.
+    ///   - aCls: The class you want to specify.
+    ///   - aSel: The selector of the class method you want to specify.
+    /// - Returns: true if the class method was exchanged successfully, otherwise false.
+    @discardableResult
+    @objc public class func exchangeClassMethod(withClass cls: AnyClass?, selector sel: Selector, anotherClass aCls: AnyClass?, anotherSelector aSel: Selector) -> Bool {
+        guard let m1 = class_getClassMethod(cls, sel),
+              let m2 = class_getClassMethod(aCls, aSel)
+        else {
+            return false
+        }
         method_exchangeImplementations(m1, m2)
         return true
     }
@@ -271,11 +306,11 @@ final public class DYFSwiftRuntimeProvider: NSObject {
             return false
         }
         let types = self.supplyMethodTypes(method)
-        class_replaceMethod(cls, sel, imp, types)
-        return true
+        let newImp = class_replaceMethod(cls, sel, imp, types)
+        return (newImp != nil) ? true : false
     }
     
-    /// Swizzles the implementation of a method for a given class.
+    /// Swizzles the implementation of two methods for a given class.
     /// - Parameters:
     ///   - cls: The class you want to specify.
     ///   - selector: The selector of the method you want to specify.
@@ -286,7 +321,7 @@ final public class DYFSwiftRuntimeProvider: NSObject {
         return self.swizzleMethod(withClass: cls, selector: selector, swizzledClass: cls, swizzledSelector: swizzledSelector)
     }
     
-    /// Swizzles the implementation of a method for two given classes.
+    /// Swizzles the implementation of two methods for two given classes.
     /// - Parameters:
     ///   - cls: The class you want to specify.
     ///   - selector: The selector of the method you want to specify.
@@ -300,17 +335,45 @@ final public class DYFSwiftRuntimeProvider: NSObject {
         else {
             return false
         }
-        let isAdded = class_addMethod(swizzledClass, swizzledSelector,
-                                      method_getImplementation(swizzledMethod),
-                                      method_getTypeEncoding(swizzledMethod))
-        if isAdded {
-            class_replaceMethod(swizzledClass, swizzledSelector,
-                                method_getImplementation(originalMethod),
-                                method_getTypeEncoding(originalMethod)
-            )
-        } else {
+        //let isAdded = class_addMethod(swizzledClass, swizzledSelector,
+        //                              method_getImplementation(swizzledMethod),
+        //                              method_getTypeEncoding(swizzledMethod))
+        //if isAdded {
+        //    class_replaceMethod(swizzledClass, swizzledSelector,
+        //                        method_getImplementation(originalMethod),
+        //                        method_getTypeEncoding(originalMethod))
+        //} else {
             method_exchangeImplementations(originalMethod, swizzledMethod)
+        //}
+        return true
+    }
+    
+    /// Swizzles the implementation of two class methods for a given class.
+    /// - Parameters:
+    ///   - cls: The class you want to specify.
+    ///   - selector: The selector of the class method you want to specify.
+    ///   - swizzledSelector: A selector that identifies the class method whose implementation you want to swizzle.
+    /// - Returns: true if the class method was swizzled successfully, otherwise false.
+    @discardableResult
+    @objc public class func swizzleClassMethod(withClass cls: AnyClass?, selector: Selector, swizzledSelector: Selector) -> Bool {
+        return self.swizzleClassMethod(withClass: cls, selector: selector, swizzledClass: cls, swizzledSelector: swizzledSelector)
+    }
+    
+    /// Swizzles the implementation of two class methods for two given classes.
+    /// - Parameters:
+    ///   - cls: The class you want to specify.
+    ///   - selector: The selector of the class method you want to specify.
+    ///   - swizzledClass: The class you want to swizzle.
+    ///   - swizzledSelector: A selector that identifies the class method whose implementation you want to swizzle.
+    /// - Returns: true if the class method was swizzled successfully, otherwise false.
+    @discardableResult
+    @objc public class func swizzleClassMethod(withClass cls: AnyClass?, selector: Selector, swizzledClass: AnyClass?, swizzledSelector: Selector) -> Bool {
+        guard let originalMethod = class_getClassMethod(cls, selector),
+              let swizzledMethod = class_getClassMethod(swizzledClass, swizzledSelector)
+        else {
+            return false
         }
+        method_exchangeImplementations(originalMethod, swizzledMethod)
         return true
     }
     
