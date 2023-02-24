@@ -24,7 +24,7 @@ target 'Your target name'
 
 pod 'DYFSwiftRuntimeProvider'
 or
-pod 'DYFSwiftRuntimeProvider', '~> 2.0.1'
+pod 'DYFSwiftRuntimeProvider', '~> 2.0.2'
 ```
 
 
