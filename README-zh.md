@@ -288,10 +288,9 @@ print("self.fillColor: \(fillColor)")
 ```
 
 
-<!-- ## 演示
+## 演示
 
-`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/chenxing640/DYFStore) 下学习如何使用。
--->
+`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/chenxing640/DYFSwiftRuntimeProvider/raw/master/Example) 下学习如何使用。
 
 
 ## 欢迎反馈
