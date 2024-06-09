@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
 //
-//  Created by chenxing on 09/21/2022.
-//  Copyright (c) 2022 chenxing. All rights reserved.
+//  Created by Tenfay on 09/21/2022.
+//  Copyright (c) 2022 Tenfay. All rights reserved.
 //
 
 import UIKit

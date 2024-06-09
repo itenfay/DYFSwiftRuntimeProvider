@@ -2,7 +2,7 @@ English Vision | [中文版](README-zh.md)
 
 ## DYFSwiftRuntimeProvider
 
-`DYFSwiftRuntimeProvider` wraps the runtime of Objective-C, and provides some common usages([Objective-C Version](https://github.com/chenxing640/DYFRuntimeProvider)).
+`DYFSwiftRuntimeProvider` wraps the runtime, and provides some common usages([Objective-C Version](https://github.com/itenfay/DYFRuntimeProvider)).
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 [![CocoaPods Version](http://img.shields.io/cocoapods/v/DYFSwiftRuntimeProvider.svg?style=flat)](http://cocoapods.org/pods/DYFSwiftRuntimeProvider)&nbsp;
@@ -12,7 +12,7 @@ English Vision | [中文版](README-zh.md)
 ## Group (ID:614799921)
 
 <div align=left>
-&emsp; <img src="https://github.com/chenxing640/DYFSwiftRuntimeProvider/raw/master/images/g614799921.jpg" width="30%" />
+&emsp; <img src="https://github.com/itenfay/DYFSwiftRuntimeProvider/raw/master/images/g614799921.jpg" width="30%" />
 </div>
 
 
@@ -39,28 +39,28 @@ Add `import DYFSwiftRuntimeProvider` to your source code.
 **1. Gets all method names of an instance of a class**
 
 ```
-let instMethods = DYFSwiftRuntimeProvider.supplyMethodList(withClass: UITableView.self)
+let instMethods = DYFSwiftRuntimeProvider.getMethodList(withClass: UITableView.self)
 print("========methods: \(instMethods)")
 ```
 
 **2. Gets all class method names of a class**
 
 ```
-let clsMethods = DYFSwiftRuntimeProvider.supplyClassMethodList(withClass: UIView.self)
+let clsMethods = DYFSwiftRuntimeProvider.getClassMethodList(withClass: UIView.self)
 print("========clsMethods: \(clsMethods)")
 ```
 
 ### Gets all variable names of a class
 
 ```
-let ivars = DYFSwiftRuntimeProvider.supplyIvarList(withClass: UIButton.self)
+let ivars = DYFSwiftRuntimeProvider.getIvarList(withClass: UIButton.self)
 print("========ivars: \(ivars)")
 ```
 
 ### Gets all the property names of a class
 
 ```
-let properties = DYFSwiftRuntimeProvider.supplyPropertyList(withClass: UIButton.self)
+let properties = DYFSwiftRuntimeProvider.getPropertyList(withClass: UIButton.self)
 print("========properties: \(properties)")
 ```
 
@@ -293,7 +293,7 @@ print("self.fillColor: \(fillColor)")
 
 ## Demo
 
-`DYFSwiftRuntimeProvider` is learned how to use under this [Demo](https://github.com/chenxing640/DYFSwiftRuntimeProvider/raw/master/Example).
+`DYFSwiftRuntimeProvider` is learned how to use under this [Demo](https://github.com/itenfay/DYFSwiftRuntimeProvider/raw/master/Example).
 
 
 ## Feedback is welcome

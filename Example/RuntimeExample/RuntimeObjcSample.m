@@ -1,8 +1,8 @@
 //
 //  RuntimeObjcSample.m
 //
-//  Created by chenxing on 2023/2/10.
-//  Copyright © 2023 chenxing. All rights reserved.
+//  Created by Tenfay on 2023/2/10.
+//  Copyright © 2023 Tenfay. All rights reserved.
 //
 
 #import "RuntimeObjcSample.h"
@@ -66,7 +66,7 @@ void rt_eatWithFoods2(id self, SEL _cmd, NSDictionary *foods)
 
 @implementation RuntimeObjcSample
 
-- (void)test
+- (void)run
 {
     SEL eatSel = NSSelectorFromString(@"rt_eatWithFoods:");
     [DYFRuntimeProvider addMethodWithClass:Teacher.class selector:eatSel impSelector:@selector(eatWithFoods:)];
@@ -80,16 +80,16 @@ void rt_eatWithFoods2(id self, SEL _cmd, NSDictionary *foods)
     [DYFRuntimeProvider swizzleMethodWithClass:Teacher.class selector:@selector(runWithStep:) swizzledSelector:@selector(run2WithStep:)];
     [DYFRuntimeProvider swizzleClassMethodWithClass:Teacher.class selector:@selector(decInfo:age:) swizzledSelector:@selector(decInfo2:age:)];
     
-    NSArray *clsMethods = [DYFRuntimeProvider supplyClassMethodListWithClass:UIView.class];
+    NSArray *clsMethods = [DYFRuntimeProvider getClassMethodListWithClass:UIView.class];
     NSLog(@"========clsMethods: %@", clsMethods);
     
-    NSArray *instMethods = [DYFRuntimeProvider supplyMethodListWithClass:UITableView.class];
+    NSArray *instMethods = [DYFRuntimeProvider getMethodListWithClass:UITableView.class];
     NSLog(@"========instMethods: %@", instMethods);
     
-    NSArray *properties = [DYFRuntimeProvider supplyPropertyListWithClass:UIButton.class];
+    NSArray *properties = [DYFRuntimeProvider getPropertyListWithClass:UIButton.class];
     NSLog(@"========properties: %@", properties);
     
-    NSArray *ivars = [DYFRuntimeProvider supplyIvarListWithClass:UIButton.class];
+    NSArray *ivars = [DYFRuntimeProvider getIvarListWithClass:UIButton.class];
     NSLog(@"========ivars: %@", ivars);
     
     Teacher *teacher = (Teacher *)[DYFRuntimeProvider asObjectWithDictionary:@{@"name": @"高粟", @"age": @26, @"address": @"xx市xx"} forClass:Teacher.class];

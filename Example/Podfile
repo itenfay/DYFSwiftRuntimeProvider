@@ -4,12 +4,12 @@ platform :ios, '10.0'
 
 source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
 
-target 'CXRuntimeExample' do
+target 'SwiftRuntimeExample' do
   
   pod 'DYFRuntimeProvider'
   pod 'DYFSwiftRuntimeProvider'
   
-  target 'CXRuntimeExample_Tests' do
+  target 'SwiftRuntimeExample_Tests' do
     inherit! :search_paths
     
   end

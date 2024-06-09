@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
 //
-//  Created by chenxing on 09/21/2022.
-//  Copyright (c) 2022 chenxing. All rights reserved.
+//  Created by Tenfay on 09/21/2022.
+//  Copyright (c) 2022 Tenfay. All rights reserved.
 //
 
 import UIKit
@@ -89,7 +89,7 @@ extension UIApplication {
 
 extension ViewController {
     
-    class func loadX() {
+    class func inject() {
         DYFSwiftRuntimeProvider.replaceMethod(withClass: People.self, selector: #selector(People.run(step:)), targetSelector: #selector(People.run2(step:)))
         //DYFSwiftRuntimeProvider.exchangeMethod(withClass: People.self, selector: #selector(People.run(step:)), anotherSelector: #selector(People.run2(step:)))
         //DYFSwiftRuntimeProvider.swizzleMethod(withClass: People.self, selector: #selector(People.run(step:)), swizzledSelector: #selector(People.run2(step:)))
@@ -110,7 +110,7 @@ class ViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        Self.loadX()
+        Self.inject()
     }
     
     @objc func sz_viewDidLoad() {
@@ -121,30 +121,30 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Self.impBlock = People.dy_replaceInstanceMethod(selector: #selector(People.logName(age:)), type: IMPCType.self, block: newFunc)
-        _ = People.dy_replaceClassMethod(selector: #selector(People.decInfo(age:name:)), type: PEDecInfoIMPCType.self, block: peDecInfoFunc)
+        Self.impBlock = People.tf_replaceInstanceMethod(selector: #selector(People.logName(age:)), type: IMPCType.self, block: newFunc)
+        _ = People.tf_replaceClassMethod(selector: #selector(People.decInfo(age:name:)), type: PEDecInfoIMPCType.self, block: peDecInfoFunc)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         let sample = RuntimeObjcSample()
-        sample.test()
+        sample.run()
         
         swiftRt()
     }
     
     private func swiftRt() {
-        let clsMethods = DYFSwiftRuntimeProvider.supplyClassMethodList(withClass: UIView.self)
+        let clsMethods = DYFSwiftRuntimeProvider.getClassMethodList(withClass: UIView.self)
         print("======== [Swift] clsMethods: \(clsMethods)")
         
-        let instMethods = DYFSwiftRuntimeProvider.supplyMethodList(withClass: UITableView.self)
+        let instMethods = DYFSwiftRuntimeProvider.getMethodList(withClass: UITableView.self)
         print("======== [Swift] methods: \(instMethods)")
         
-        let properties = DYFSwiftRuntimeProvider.supplyPropertyList(withClass: UIButton.self)
+        let properties = DYFSwiftRuntimeProvider.getPropertyList(withClass: UIButton.self)
         print("======== [Swift] properties: \(properties)")
         
-        let ivars = DYFSwiftRuntimeProvider.supplyIvarList(withClass: UIButton.self)
+        let ivars = DYFSwiftRuntimeProvider.getIvarList(withClass: UIButton.self)
         print("======== [Swift] ivars: \(ivars)")
         
         let teacher = DYFSwiftRuntimeProvider.asObject(with: ["name": "高粟", "age": 26, "address": "长沙市xxxxxxxx"], for: Teacher.self)

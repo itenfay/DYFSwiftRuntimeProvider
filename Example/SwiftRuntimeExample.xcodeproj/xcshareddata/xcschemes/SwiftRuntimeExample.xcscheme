@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-               BuildableName = "CXRuntimeExample.app"
-               BlueprintName = "CXRuntimeExample"
-               ReferencedContainer = "container:CXRuntimeExample.xcodeproj">
+               BuildableName = "SwiftRuntimeExample.app"
+               BlueprintName = "SwiftRuntimeExample"
+               ReferencedContainer = "container:SwiftRuntimeExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "CXRuntimeExample_Tests.xctest"
-               BlueprintName = "CXRuntimeExample_Tests"
-               ReferencedContainer = "container:CXRuntimeExample.xcodeproj">
+               BuildableName = "SwiftRuntimeExample_Tests.xctest"
+               BlueprintName = "SwiftRuntimeExample_Tests"
+               ReferencedContainer = "container:SwiftRuntimeExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "CXRuntimeExample.app"
-            BlueprintName = "CXRuntimeExample"
-            ReferencedContainer = "container:CXRuntimeExample.xcodeproj">
+            BuildableName = "SwiftRuntimeExample.app"
+            BlueprintName = "SwiftRuntimeExample"
+            ReferencedContainer = "container:SwiftRuntimeExample.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -56,9 +56,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "607FACE41AFB9204008FA782"
-               BuildableName = "CXRuntimeExample_Tests.xctest"
-               BlueprintName = "CXRuntimeExample_Tests"
-               ReferencedContainer = "container:CXRuntimeExample.xcodeproj">
+               BuildableName = "SwiftRuntimeExample_Tests.xctest"
+               BlueprintName = "SwiftRuntimeExample_Tests"
+               ReferencedContainer = "container:SwiftRuntimeExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -78,9 +78,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "CXRuntimeExample.app"
-            BlueprintName = "CXRuntimeExample"
-            ReferencedContainer = "container:CXRuntimeExample.xcodeproj">
+            BuildableName = "SwiftRuntimeExample.app"
+            BlueprintName = "SwiftRuntimeExample"
+            ReferencedContainer = "container:SwiftRuntimeExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "607FACCF1AFB9204008FA782"
-            BuildableName = "CXRuntimeExample.app"
-            BlueprintName = "CXRuntimeExample"
-            ReferencedContainer = "container:CXRuntimeExample.xcodeproj">
+            BuildableName = "SwiftRuntimeExample.app"
+            BlueprintName = "SwiftRuntimeExample"
+            ReferencedContainer = "container:SwiftRuntimeExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

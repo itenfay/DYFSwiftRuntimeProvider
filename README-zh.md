@@ -2,7 +2,7 @@
 
 ## DYFSwiftRuntimeProvider
 
-`DYFRuntimeProvider`包装了Objective-C的运行时，并提供了一些常见的用法([Objective-C Version](https://github.com/chenxing640/DYFRuntimeProvider))。
+`DYFRuntimeProvider`包装了运行时，并提供了一些常见的用法([Objective-C Version](https://github.com/itenfay/DYFRuntimeProvider))。
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 [![CocoaPods Version](http://img.shields.io/cocoapods/v/DYFSwiftRuntimeProvider.svg?style=flat)](http://cocoapods.org/pods/DYFSwiftRuntimeProvider)&nbsp;
@@ -12,7 +12,7 @@
 ## QQ群 (ID:614799921)
 
 <div align=left>
-&emsp; <img src="https://github.com/chenxing640/DYFSwiftRuntimeProvider/raw/master/images/g614799921.jpg" width="30%" />
+&emsp; <img src="https://github.com/itenfay/DYFSwiftRuntimeProvider/raw/master/images/g614799921.jpg" width="30%" />
 </div>
 
 
@@ -39,28 +39,28 @@ pod 'DYFSwiftRuntimeProvider', '~> 2.0.2'
 **1. 获取一个类的实例的所有方法名**
 
 ```
-let instMethods = DYFSwiftRuntimeProvider.supplyMethodList(withClass: UITableView.self)
+let instMethods = DYFSwiftRuntimeProvider.getMethodList(withClass: UITableView.self)
 print("========methods: \(instMethods)")
 ```
 
 **2. 获取一个类的所有类方法名**
 
 ```
-let clsMethods = DYFSwiftRuntimeProvider.supplyClassMethodList(withClass: UIView.self)
+let clsMethods = DYFSwiftRuntimeProvider.getClassMethodList(withClass: UIView.self)
 print("========clsMethods: \(clsMethods)")
 ```
 
 ### 获取一个类的所有变量名
 
 ```
-let ivars = DYFSwiftRuntimeProvider.supplyIvarList(withClass: UIButton.self)
+let ivars = DYFSwiftRuntimeProvider.getIvarList(withClass: UIButton.self)
 print("========ivars: \(ivars)")
 ```
 
 ### 获取一个类的所有属性名
 
 ```
-let properties = DYFSwiftRuntimeProvider.supplyPropertyList(withClass: UIButton.self)
+let properties = DYFSwiftRuntimeProvider.getPropertyList(withClass: UIButton.self)
 print("========properties: \(properties)")
 ```
 
@@ -292,7 +292,7 @@ print("self.fillColor: \(fillColor)")
 
 ## 演示
 
-`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/chenxing640/DYFSwiftRuntimeProvider/raw/master/Example) 下学习如何使用。
+`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/itenfay/DYFSwiftRuntimeProvider/raw/master/Example) 下学习如何使用。
 
 
 ## 欢迎反馈
