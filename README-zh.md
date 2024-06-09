@@ -21,12 +21,14 @@
 使用 [CocoaPods](https://cocoapods.org):
 
 ``` 
-use_frameworks!
-target 'Your target name'
-
 pod 'DYFSwiftRuntimeProvider'
-or
-pod 'DYFSwiftRuntimeProvider', '~> 2.0.2'
+```
+
+Or
+
+```
+pod 'DYFSwiftRuntimeProvider', '~> 2.1.0'
+
 ```
 
 
@@ -181,8 +183,8 @@ private let peDecInfoFunc: @convention(block) (Any, Int, String) -> Void = { (ob
 
 override func viewDidLoad() {
     super.viewDidLoad()
-    Self.impBlock = People.dy_replaceInstanceMethod(selector: #selector(People.logName(age:)), type: IMPCType.self, block: newFunc)
-    _ = People.dy_replaceClassMethod(selector: #selector(People.decInfo(age:name:)), type: PEDecInfoIMPCType.self, block: peDecInfoFunc)
+    Self.impBlock = People.tf_replaceInstanceMethod(selector: #selector(People.logName(age:)), type: IMPCType.self, block: newFunc)
+    _ = People.tf_replaceClassMethod(selector: #selector(People.decInfo(age:name:)), type: PEDecInfoIMPCType.self, block: peDecInfoFunc)
 }
 ```
 
