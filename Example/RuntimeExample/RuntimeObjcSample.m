@@ -57,12 +57,11 @@ void rt_eatWithFoods2(id self, SEL _cmd, NSDictionary *foods)
     NSLog(@"========%@, %@ eat foods: %@", self, NSStringFromSelector(_cmd), foods);
 }
 
-
 @interface RuntimeObjcSample ()
 
 @end
 
-#define CXLogMessageFormat(m) ([NSString stringWithFormat:@"[F: %s, M: %s, L: %d] %@",  __FILE__, __PRETTY_FUNCTION__, __LINE__, (m)])
+#define TFLogMessageFormat(m) ([NSString stringWithFormat:@"[F: %s, M: %s, L: %d] %@",  __FILE__, __PRETTY_FUNCTION__, __LINE__, (m)])
 
 @implementation RuntimeObjcSample
 
@@ -81,16 +80,16 @@ void rt_eatWithFoods2(id self, SEL _cmd, NSDictionary *foods)
     [DYFRuntimeProvider swizzleClassMethodWithClass:Teacher.class selector:@selector(decInfo:age:) swizzledSelector:@selector(decInfo2:age:)];
     
     NSArray *clsMethods = [DYFRuntimeProvider getClassMethodListWithClass:UIView.class];
-    NSLog(@"========clsMethods: %@", clsMethods);
+    NSLog(@"========UIView.clsMethods: %@", clsMethods);
     
     NSArray *instMethods = [DYFRuntimeProvider getMethodListWithClass:UITableView.class];
-    NSLog(@"========instMethods: %@", instMethods);
+    NSLog(@"========UITableView.instMethods: %@", instMethods);
     
     NSArray *properties = [DYFRuntimeProvider getPropertyListWithClass:UIButton.class];
-    NSLog(@"========properties: %@", properties);
+    NSLog(@"========UIButton.properties: %@", properties);
     
     NSArray *ivars = [DYFRuntimeProvider getIvarListWithClass:UIButton.class];
-    NSLog(@"========ivars: %@", ivars);
+    NSLog(@"========UIButton.ivars: %@", ivars);
     
     Teacher *teacher = (Teacher *)[DYFRuntimeProvider asObjectWithDictionary:@{@"name": @"高粟", @"age": @26, @"address": @"xx市xx"} forClass:Teacher.class];
     if (teacher) {

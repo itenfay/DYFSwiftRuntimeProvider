@@ -136,16 +136,16 @@ class ViewController: UIViewController {
     
     private func swiftRt() {
         let clsMethods = DYFSwiftRuntimeProvider.getClassMethodList(withClass: UIView.self)
-        print("======== [Swift] clsMethods: \(clsMethods)")
+        print("======== [Swift] UIView.clsMethods: \(clsMethods)")
         
         let instMethods = DYFSwiftRuntimeProvider.getMethodList(withClass: UITableView.self)
-        print("======== [Swift] methods: \(instMethods)")
+        print("======== [Swift] UITableView.methods: \(instMethods)")
         
         let properties = DYFSwiftRuntimeProvider.getPropertyList(withClass: UIButton.self)
-        print("======== [Swift] properties: \(properties)")
+        print("======== [Swift] UIButton.properties: \(properties)")
         
         let ivars = DYFSwiftRuntimeProvider.getIvarList(withClass: UIButton.self)
-        print("======== [Swift] ivars: \(ivars)")
+        print("======== [Swift] UIButton.ivars: \(ivars)")
         
         let teacher = DYFSwiftRuntimeProvider.asObject(with: ["name": "高粟", "age": 26, "address": "长沙市xxxxxxxx"], for: Teacher.self)
         if let teacher = teacher {
@@ -175,10 +175,12 @@ class ViewController: UIViewController {
         print("======== [Swift] self.fillColor: \(fillColor)")
         
         if let view = DYFSwiftRuntimeProvider.getInstanceVar(withName: "_view", forObject: self) as? UIView {
-            view.backgroundColor = UIColor.brown
+            UIView.animate(withDuration: 0.5, delay: 2) {
+                view.backgroundColor = UIColor.brown
+            }
         }
         
-        let p2 = People(name: "Albert")
+        let p2 = People(name: "John")
         p2.run(step: 20)
         p2.run2(step: 50)
     }
