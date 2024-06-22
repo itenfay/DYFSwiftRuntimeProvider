@@ -1,24 +1,25 @@
-English Vision | [中文版](README-zh.md)
+中文版 | [English Vision](README-en.md)
+
 
 ## DYFSwiftRuntimeProvider
 
-`DYFSwiftRuntimeProvider` wraps the runtime, and provides some common usages([Objective-C Version](https://github.com/itenfay/DYFRuntimeProvider)).
+`DYFRuntimeProvider`包装了运行时，并提供了一些常见的用法([Objective-C Version](https://github.com/itenfay/DYFRuntimeProvider))。
 
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](LICENSE)&nbsp;
 [![CocoaPods Version](http://img.shields.io/cocoapods/v/DYFSwiftRuntimeProvider.svg?style=flat)](http://cocoapods.org/pods/DYFSwiftRuntimeProvider)&nbsp;
 ![CocoaPods Platform](http://img.shields.io/cocoapods/p/DYFSwiftRuntimeProvider.svg?style=flat)&nbsp;
 
 
-## Group (ID:614799921)
+## QQ群 (ID:614799921)
 
 <div align=left>
 &emsp; <img src="https://github.com/itenfay/DYFSwiftRuntimeProvider/raw/master/images/g614799921.jpg" width="30%" />
 </div>
 
 
-## Installation
+## 安装
 
-Using [CocoaPods](https://cocoapods.org):
+使用 [CocoaPods](https://cocoapods.org):
 
 ``` 
 pod 'DYFSwiftRuntimeProvider'
@@ -27,47 +28,46 @@ pod 'DYFSwiftRuntimeProvider'
 Or
 
 ```
-pod 'DYFSwiftRuntimeProvider', '~> 2.1.0'
+pod 'DYFSwiftRuntimeProvider', '~> 2.1.1'
 
 ```
 
 
-## Usage
+## 使用
 
-Add `import DYFSwiftRuntimeProvider` to your source code.
+将 `import DYFSwiftRuntimeProvider` 添加到源代码中。
 
-### Gets all the method names of a class
+### 获取一个类的所有方法名
 
-**1. Gets all method names of an instance of a class**
+**1. 获取一个类的实例的所有方法名**
 
 ```
 let instMethods = DYFSwiftRuntimeProvider.getMethodList(withClass: UITableView.self)
 print("========methods: \(instMethods)")
 ```
 
-**2. Gets all class method names of a class**
+**2. 获取一个类的所有类方法名**
 
 ```
 let clsMethods = DYFSwiftRuntimeProvider.getClassMethodList(withClass: UIView.self)
 print("========clsMethods: \(clsMethods)")
 ```
 
-### Gets all variable names of a class
+### 获取一个类的所有变量名
 
 ```
 let ivars = DYFSwiftRuntimeProvider.getIvarList(withClass: UIButton.self)
 print("========ivars: \(ivars)")
 ```
 
-### Gets all the property names of a class
+### 获取一个类的所有属性名
 
 ```
 let properties = DYFSwiftRuntimeProvider.getPropertyList(withClass: UIButton.self)
 print("========properties: \(properties)")
 ```
 
-Take this class as an example. e.g.:
-
+以这个类为例，如下：
 ```
 class People: NSObject {
     var name: String
@@ -111,7 +111,7 @@ class People: NSObject {
 }
 ```
 
-### Adds a method
+### 添加一个方法
 
 ```
 override func viewDidLoad() {
@@ -121,7 +121,7 @@ override func viewDidLoad() {
 }
 ```
 
-### Exchanges two methods
+### 交换两个方法
 
 ```
 override func viewDidLoad() {
@@ -137,7 +137,7 @@ override func viewDidLoad() {
 }
 ```
 
-### Replaces a method
+### 替换一个方法
 
 ```
 override func viewDidLoad() {
@@ -148,7 +148,7 @@ override func viewDidLoad() {
 }
 ```
 
-### Swizzle two methods
+### 交换两个方法（黑魔法）
 
 ```
 override func viewDidLoad() {
@@ -164,7 +164,7 @@ override func viewDidLoad() {
 }
 ```
 
-### Dynamic replace instance and class method
+### 动态替换实例和类方法
 
 ```
 typealias IMPCType = @convention(c) (Any, Selector, Int) -> Void
@@ -189,9 +189,9 @@ override func viewDidLoad() {
 }
 ```
 
-### The transformation of dictionary and model
+### 字典和模型的转换
 
-Take this class as an example. e.g.:
+以这个类为例，如下：
 
 ```
 class Teacher: NSObject {
@@ -201,7 +201,7 @@ class Teacher: NSObject {
 }
 ```
 
-**1. Converts the dictionary to model**
+**1. 字典转模型**
 
 ```
 let teacher = DYFSwiftRuntimeProvider.asObject(with: ["name": "高粟", "age": 26, "address": "xx市xx"], for: Teacher.self)
@@ -215,7 +215,7 @@ _ = DYFSwiftRuntimeProvider.asObject(withDictionary: ["name": "高粟", "age": 2
 _ = DYFSwiftRuntimeProvider.asObject(withDictionary: ["name": "高粟", "age": 26, "address": "xx市xx"], forObject: Teacher())
 ```
 
-**2. Converts the model to dictionary**
+**2. 模型转字典**
 
 ```
 let teacher = Teacher()
@@ -226,9 +226,9 @@ let dict = DYFSwiftRuntimeProvider.asDictionary(withObject: teacher)
 print("========dict: \(dict)")
 ```
 
-### Archives and unarchives
+### 归档解档
 
-**1. Archives**
+**1. 归档**
 
 ```
 open class Transaction: NSObject, NSCoding {
@@ -238,7 +238,7 @@ open class Transaction: NSObject, NSCoding {
 }
 ```
 
-**2. Unarchives**
+**2. 解档**
 
 ```
 open class Transaction: NSObject, NSCoding {
@@ -249,7 +249,7 @@ open class Transaction: NSObject, NSCoding {
 }
 ```
 
-### Add a catogory property
+### 添加一个分类属性
 
 ```
 extension UIApplication {
@@ -270,7 +270,7 @@ extension UIApplication {
 }
 ```
 
-### Get and modify instance variable property.
+### 获取和修改实例变量属性
 
 ```
 // for ViewController.
@@ -293,11 +293,11 @@ print("self.fillColor: \(fillColor)")
 ```
 
 
-## Demo
+## 演示
 
-`DYFSwiftRuntimeProvider` is learned how to use under this [Demo](https://github.com/itenfay/DYFSwiftRuntimeProvider/raw/master/Example).
+`DYFSwiftRuntimeProvider` 在此 [演示](https://github.com/itenfay/DYFSwiftRuntimeProvider/raw/master/Example) 下学习如何使用。
 
 
-## Feedback is welcome
+## 欢迎反馈
 
-If you notice any issue, got stuck to create an issue. I will be happy to help you.
+如果您发现任何问题，请创建问题。我很乐意帮助你。
